@@ -1,6 +1,9 @@
 package api.models;
 
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ public class Cat {
         return "Cat [id=" + id + ", name=" + name + "]";
     }
     
-    public List<CatPayLoads> index(){
+    public List<Object> index(){
 
         try {
           Statement statement = repostory.conn.createStatement();
@@ -53,7 +56,7 @@ public class Cat {
           
           ResultSet rs = statement.executeQuery(sql);
 
-          List<CatPayLoads> cats = new ArrayList<>(); 
+          List<Object> cats = new ArrayList<>(); 
           while (rs.next()) {
             CatPayLoads cat = new CatPayLoads();
             cat.setName(rs.getString("name"));
@@ -69,6 +72,26 @@ public class Cat {
         
 
         
+    }
+
+    public CatPayLoads save(CatPayLoads catPayLoads) throws SQLException {
+        String mySql_insert= String.format("INSERT INTO %s (id_cat,name) VALUES (?,?);", table);
+        PreparedStatement preparedStatement = repostory.conn.prepareStatement(mySql_insert);
+        preparedStatement.setInt(1, catPayLoads.getId());
+        preparedStatement.setString(2, catPayLoads.getName());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+        Statement statement = repostory.conn.createStatement();
+        String mySql_select = String.format("SELECT * FROM %s ORDER BY id_cat DESC LIMIT 1;", table);
+        
+        ResultSet rs = statement.executeQuery(mySql_select);
+        while(rs.next()){
+            catPayLoads.setId(rs.getInt("id_cat"));
+            catPayLoads.setName(rs.getString("name"));
+        }
+
+        return catPayLoads;
     }
     
 }
