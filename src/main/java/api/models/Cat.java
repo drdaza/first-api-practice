@@ -93,5 +93,16 @@ public class Cat {
 
         return catPayLoads;
     }
+    public List<Object> delete(CatPayLoads catPayLoads) throws SQLException{
+        
+        String mySql_delete = String.format("DELETE FROM %s WHERE id_cat = (?) ", table);
+        PreparedStatement preparedStatement = repostory.conn.prepareStatement(mySql_delete);
+        preparedStatement.setInt(1, catPayLoads.getId());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+
+        return index();
+    }
     
 }

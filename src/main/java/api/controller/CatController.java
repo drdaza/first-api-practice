@@ -66,4 +66,22 @@ public class CatController extends HttpServlet {
 
 
     }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json;charset=utf-8");
+        PrintWriter out = resp.getWriter();
+
+        BufferedReader reader = req.getReader();
+        try {
+            List<Object> cats =  catService.delete(reader);
+            out.println(View.show(cats));
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+            
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            Message message = new Message();
+            message.setMessage("Error al eliminar " + e.getMessage());
+            out.println(View.show(message));
+        }
+    }
 }
