@@ -45,6 +45,16 @@ public class CatService implements InterfaceService{
         
     }
 
+    @Override
+    public Object upload(BufferedReader body) {
+        try {
+            CatPayLoads catPayLoads = gson.fromJson(body, CatPayLoads.class);
+            return cat.delete(catPayLoads);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     
     
     
