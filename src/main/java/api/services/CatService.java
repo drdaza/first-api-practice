@@ -49,7 +49,7 @@ public class CatService implements InterfaceService{
     public Object upload(BufferedReader body) {
         try {
             CatPayLoads catPayLoads = gson.fromJson(body, CatPayLoads.class);
-            System.out.println(cat.upload(catPayLoads) + "aaaa");
+            
             return cat.upload(catPayLoads);
         } catch (Exception e) {
             System.out.println(e.getMessage());

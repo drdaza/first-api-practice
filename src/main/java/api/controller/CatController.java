@@ -94,7 +94,7 @@ public class CatController extends HttpServlet {
         try {
             
             Object cat = catService.upload(reader);
-            System.out.println(cat);
+            
             out.println(View.show(cat));
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

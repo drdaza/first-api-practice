@@ -114,40 +114,20 @@ public class Cat {
         preparedStatement.executeUpdate();
         preparedStatement.close();
 
-        
-        /* String mySql_select = String.format("SELECT * FROM %s WHERE id_cat=?", mySql_update, table);
-        PreparedStatement preparedStatement2 = repostory.conn.prepareStatement(mySql_select);
-        preparedStatement2.setInt(1, catPayLoads.getId());
-        
-        
-        ResultSet rs = preparedStatement2.executeQuery(mySql_select);
-        preparedStatement2.close();
-        CatPayLoads cat = new CatPayLoads();
-        while (rs.next()) {
-            
-            cat.setName(rs.getString("name"));
-            cat.setId(rs.getInt("id_cat"));
-            
-          } */
-        return index();
+        return getOne(catPayLoads);
         
     }
     public Object getOne(CatPayLoads catPayLoads) throws SQLException{
         try {
-            String mySql_select = String.format("SELECT * FROM %s WHERE id_cat= ?;", table);
-        PreparedStatement preparedStatement2 = repostory.conn.prepareStatement(mySql_select);
-        preparedStatement2.setInt(1, catPayLoads.getId());
+            Statement statement = repostory.conn.createStatement();
+            String mySql_select = String.format("SELECT * FROM %s WHERE id_cat = %s;",table, catPayLoads.getId());
         
-        
-        ResultSet rs = preparedStatement2.executeQuery(mySql_select);
-        
-        CatPayLoads cat = new CatPayLoads();
+            ResultSet rs = statement.executeQuery(mySql_select);
+            CatPayLoads cat = new CatPayLoads();
         while (rs.next()) {
-            
-            cat.setName(rs.getString("name"));
             cat.setId(rs.getInt("id_cat"));
-            
-          }
+            cat.setName(rs.getString("name")); 
+        }
         return cat;
         } catch (Exception e) {
             System.out.println(e.getMessage());
