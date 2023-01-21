@@ -95,7 +95,7 @@ public class Cat {
     }
     public List<Object> delete(CatPayLoads catPayLoads) throws SQLException{
         
-        String mySql_delete = String.format("DELETE FROM %s WHERE id_cat = (?) ", table);
+        String mySql_delete = String.format("DELETE FROM %s WHERE id_cat = (?);", table);
         PreparedStatement preparedStatement = repostory.conn.prepareStatement(mySql_delete);
         preparedStatement.setInt(1, catPayLoads.getId());
         preparedStatement.executeUpdate();
@@ -103,6 +103,56 @@ public class Cat {
 
 
         return index();
+    }
+    public Object upload(CatPayLoads catPayLoads) throws SQLException{
+        
+        String mySql_update = String.format("UPDATE %s set id_cat = ?, name = ? WHERE id_cat= ?;", table);
+        PreparedStatement preparedStatement = repostory.conn.prepareStatement(mySql_update);
+        preparedStatement.setInt(1, catPayLoads.getId());
+        preparedStatement.setString(2, catPayLoads.getName());
+        preparedStatement.setInt(3, catPayLoads.getId());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+
+        
+        /* String mySql_select = String.format("SELECT * FROM %s WHERE id_cat=?", mySql_update, table);
+        PreparedStatement preparedStatement2 = repostory.conn.prepareStatement(mySql_select);
+        preparedStatement2.setInt(1, catPayLoads.getId());
+        
+        
+        ResultSet rs = preparedStatement2.executeQuery(mySql_select);
+        preparedStatement2.close();
+        CatPayLoads cat = new CatPayLoads();
+        while (rs.next()) {
+            
+            cat.setName(rs.getString("name"));
+            cat.setId(rs.getInt("id_cat"));
+            
+          } */
+        return index();
+        
+    }
+    public Object getOne(CatPayLoads catPayLoads) throws SQLException{
+        try {
+            String mySql_select = String.format("SELECT * FROM %s WHERE id_cat= ?;", table);
+        PreparedStatement preparedStatement2 = repostory.conn.prepareStatement(mySql_select);
+        preparedStatement2.setInt(1, catPayLoads.getId());
+        
+        
+        ResultSet rs = preparedStatement2.executeQuery(mySql_select);
+        
+        CatPayLoads cat = new CatPayLoads();
+        while (rs.next()) {
+            
+            cat.setName(rs.getString("name"));
+            cat.setId(rs.getInt("id_cat"));
+            
+          }
+        return cat;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
     
 }
