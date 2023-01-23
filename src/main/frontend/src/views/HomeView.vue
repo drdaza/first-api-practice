@@ -8,7 +8,7 @@ testStore.AsignCharacters();
 <template>
   <main>
     <h1 v-for="character of testStore.Characters">
-      {{character.id}}
+      {{character.id}} - {{ character.name }}
     </h1>
   </main>
 </template>

@@ -7,21 +7,10 @@ export default class Cats{
     }
 
     async getAll(){
-            
-       
         const response = await fetch(this.url,
-            {method: 'GET',
-			headers: {
-				mode: 'no-cors',
-                credentials: 'include',
-                "Access-Control-Allow-*": true,
-                "Access-Control-Allow-Origin":"*",
-                "Access-Control-Allow-Methods": "HEAD, GET, POST, PUT, PATCH, DELETE",
-                "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
-                "Content-Type": "application/json"
-			}}
+            {method: 'GET'}
         );
-        console.log(response);
+        
         let charactersToReturn = [];
         for (const character of await response.json()) {
             let temporalCat = new CatPayLoad(character.id, character.name);
@@ -29,5 +18,11 @@ export default class Cats{
             charactersToReturn.push(temporalCat);
         }
         return charactersToReturn;
+    }
+    async post(data){
+
+        const response = await fetch(this.url,{method:'POST',body: JSON.stringify(data)});
+
+        return response.json();
     }
 }

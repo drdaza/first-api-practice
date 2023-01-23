@@ -27,7 +27,7 @@ public class CatController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         resp.setContentType("application/json; charset= utf-8");
-
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         
@@ -50,6 +50,8 @@ public class CatController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Methods", "POST");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();
@@ -69,6 +71,7 @@ public class CatController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();
@@ -87,6 +90,7 @@ public class CatController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();

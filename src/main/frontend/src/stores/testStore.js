@@ -17,6 +17,13 @@ export const characterStore = defineStore({
         },
         getChracterbyId(characterId){
             return this.Characters.find(item => item.id == characterId)
+        }, 
+        async postNewCat(data){
+            const MyApiCall = new Repository('cats')
+            const Response = MyApiCall.chooseApi();
+
+            let json = await Response.post(data);
+            return json.json();
         }
     }
 
