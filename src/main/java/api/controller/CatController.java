@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import api.interfaceService.InterfaceCatRepository;
 import api.interfaceService.InterfaceService;
 
 import api.models.Message;
-
+import api.repositories.mysql.MySqlCatRepository;
 import api.services.CatService;
 import api.views.View;
 import jakarta.servlet.ServletException;
@@ -21,13 +22,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CatController extends HttpServlet {
     private InterfaceService catService;
     public CatController(){
-        this.catService = new CatService();
+        InterfaceCatRepository db = new MySqlCatRepository();
+        this.catService = new CatService(db);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         resp.setContentType("application/json; charset= utf-8");
-
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         
@@ -50,6 +52,7 @@ public class CatController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();
@@ -69,6 +72,7 @@ public class CatController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();
@@ -87,6 +91,7 @@ public class CatController extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json;charset=utf-8");
+        resp.setHeader("Access-Control-Allow-Origin", "*");
         PrintWriter out = resp.getWriter();
 
         BufferedReader reader = req.getReader();
